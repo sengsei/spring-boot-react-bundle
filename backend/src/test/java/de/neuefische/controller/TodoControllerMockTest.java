@@ -30,7 +30,7 @@ class TodoControllerMockTest {
        TodoElement todoElement = new TodoElement();
        todoElement.setTitle("Java");
 
-       when(todoService.getTodoElementByTitle("Java")).thenReturn(Optional.of(todoElement));
+       when(todoService.getTodoElementById("Java")).thenReturn(todoElement);
 
        ResponseEntity<TodoElement> response = testRestTemplate.getForEntity("/todos/Java", TodoElement.class);
        assertEquals(todoElement.getTitle(), Objects.requireNonNull(response.getBody()).getTitle());

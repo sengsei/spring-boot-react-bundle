@@ -2,41 +2,44 @@ package de.neuefische.service;
 
 import de.neuefische.TodoElement;
 import de.neuefische.repository.TodoRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class TodoService {
 
     private final TodoRepo todoRepo;
 
-    public TodoService(TodoRepo todoRepo) {
-        this.todoRepo = todoRepo;
+    public void addTodo(TodoElement todoElement) {
+        todoRepo.save(todoElement);
     }
 
-    public List<TodoElement> getTodoList(){
+    public TodoElement getTodoElementById(String id) {
+        return todoRepo.getTodoElementByID(id);
+    }
+
+    public Collection<TodoElement>getTodoList() {
         return todoRepo.getTodoList();
     }
 
-    public void addTodo(TodoElement todoElement) {
-        todoRepo.addTodo(todoElement);
+    public void deleteTodo(String id){
+        todoRepo.delete(id);
     }
 
-    public Optional<TodoElement> getTodoElementByTitle(String title) {
-        return todoRepo.getTodoElementByTitle(title);
+    public void changeTodo(String id, TodoElement changedTodo){
+        TodoElement todoElement = todoRepo.getTodoElementByID(id);
+
+        todoElement.setTitle(changedTodo.getTitle());
+        todoElement.setState(changedTodo.getState());
+        todoElement.setText(changedTodo.getText());
+        todoRepo.save(todoElement);
     }
 
-    public List<TodoElement> getAllCompletedTodoElements() {
-        return todoRepo.getAllCompletedTodoElements();
-    }
 
-    public List<TodoElement> getAllUncompletedTodoElements() {
-        return todoRepo.getAllUncompletedTodoElements();
-    }
 
-    public void setState(String id){
-        todoRepo.setStateCompleted(id);
-    }
+
 }

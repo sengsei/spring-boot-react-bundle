@@ -15,7 +15,7 @@ class TodoServiceTest {
         TodoElement todoElement = new TodoElement();
         todoElement.setTitle("Sport");
         TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
+        todoRepo.save(todoElement);
         TodoService todoService = new TodoService(todoRepo);
 
         List<TodoElement> expected = List.of(todoElement);
@@ -28,7 +28,7 @@ class TodoServiceTest {
         TodoElement todoElement = new TodoElement();
         todoElement.setTitle("Sport");
         TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
+        todoRepo.save(todoElement);
         TodoService todoService = new TodoService(todoRepo);
 
         List<TodoElement> expected = List.of(todoElement);
@@ -36,61 +36,4 @@ class TodoServiceTest {
         assertEquals(expected, todoService.getTodoList());
     }
 
-    @Test
-    void getTodoElementByTitle() {
-        TodoElement todoElement = new TodoElement();
-        todoElement.setTitle("Sport");
-        TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
-        TodoService todoService = new TodoService(todoRepo);
-        String expected = "Sport";
-
-        assertEquals(expected, todoService.getTodoElementByTitle("Sport").orElse(todoElement).getTitle());
-    }
-
-    @Test
-    void getAllCompletedTodoElements() {
-        TodoElement todoElement = new TodoElement();
-        todoElement.setTitle("Sport");
-        todoElement.setState(true);
-        TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
-        TodoService todoService = new TodoService(todoRepo);
-        List<TodoElement> expected = List.of(todoElement);
-
-        assertEquals(expected, todoService.getAllCompletedTodoElements());
-
-    }
-
-    @Test
-    void getAllUncompletedTodoElements() {
-        TodoElement todoElement = new TodoElement();
-        todoElement.setTitle("Sport");
-        TodoElement todoElement1 = new TodoElement();
-        todoElement1.setTitle("Java");
-        todoElement1.setState(true);
-        TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
-        todoRepo.addTodo(todoElement1);
-        TodoService todoService = new TodoService(todoRepo);
-        List<TodoElement> expected = List.of(todoElement);
-
-        assertEquals(expected, todoService.getAllUncompletedTodoElements());
-    }
-
-    @Test
-    void shouldSetStateDone(){
-        TodoElement todoElement = new TodoElement();
-        todoElement.setTitle("Sport");
-        TodoRepo todoRepo = new TodoRepo();
-        todoRepo.addTodo(todoElement);
-        TodoService todoService = new TodoService(todoRepo);
-
-        todoService.setState(todoElement.getId());
-
-        assertTrue(todoService.getTodoElementByTitle("Sport").orElse(todoElement).isState());
-
-
-
-    }
 }

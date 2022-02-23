@@ -3,38 +3,25 @@ package de.neuefische.repository;
 import de.neuefische.TodoElement;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class TodoRepo {
-    private final List<TodoElement> todoList = new ArrayList<>();
+    private final Map<String, TodoElement> todoList = new HashMap<>();
 
-    public List<TodoElement> getTodoList(){
-        return todoList;
+    public Collection<TodoElement> getTodoList(){
+        return todoList.values();
     }
 
-    public Optional<TodoElement> getTodoElementByTitle(String title){
-        return todoList.stream().filter(e -> e.getTitle().equals(title)).findFirst();
+    public TodoElement getTodoElementByID(String id){
+        return todoList.get(id);
     }
 
-    public List<TodoElement> getAllCompletedTodoElements(){
-        return getTodoList().stream().filter(TodoElement::isState).toList();
+    public void save(TodoElement todoElement) {
+        todoList.put(todoElement.getId(), todoElement);
     }
 
-    public List<TodoElement> getAllUncompletedTodoElements(){
-        return getTodoList().stream().filter(e -> !e.isState()).toList();
-    }
-
-    public void addTodo(TodoElement todoElement) {
-        todoList.add(todoElement);
-    }
-
-    public void  setStateCompleted(String id) {
-        todoList.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst().orElseThrow()
-                .setState(true);
+    public void delete(String id){
+        todoList.remove(id);
     }
 }
