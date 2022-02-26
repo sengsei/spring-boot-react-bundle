@@ -2,23 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
 
-    const [greeting, setGreeting] = useState('')
-
     useEffect(() => {
-        fetch('/api/greeting', {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        })
-            .then(response => response.text())
-            .then(text => setGreeting(text))
-            .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    }, []);
+        console.log("i am hooked up")
+
+        fetch('http://localhost:8080/todos').then(response => response.json())
+            .then(todoItems => console.log(todoItems))
+    })
 
     return (
         <div>
-            {greeting}
+
         </div>
     );
 }
