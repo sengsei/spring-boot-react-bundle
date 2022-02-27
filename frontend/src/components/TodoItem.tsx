@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {State, TodoElement} from "../model";
+import "./TodoItem.css"
 
 const TodoItem = (props: TodoElement ) => {
 
     return (
-        <div>
+        <div className={"post-field"}>
             <div>ID: {props.id}</div>
             <div>Title: {props.title}</div>
             <div>Text: {props.text}</div>

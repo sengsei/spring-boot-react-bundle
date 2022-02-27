@@ -1,0 +1,8 @@
+.post-it{
+    display: grid;
+    justify-content: center;
+}
+.button{
+    display: grid;
+    justify-content: center;
+}

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {State, TodoElement} from "../model";
 import TodoItem from "./TodoItem"
+import "./TodoList.css"
 
 export default function TodoList() {
 
@@ -62,20 +63,17 @@ export default function TodoList() {
     return (
         <div>
 
-            <div>
-
+            <div className={"post-it"}>
                 <input type="text" placeholder={'title'} value={title} onChange={a => setTitle(a.target.value)}/>
                 <input type="text" placeholder={'text'} value={text} onChange={a => setText(a.target.value)}/>
                 <input type="checkbox"/>
                 <input type="text" placeholder={'id'} value={id} onChange={a => setId(a.target.value)}/>
-
             </div>
+            <div className={"button"}>
             <button onClick={setAttributes}> add todo</button>
             <button onClick={getTodoList}> get todolist</button>
-
-            <div><button onClick={deleteById}>delete</button></div>
-
-
+            <button onClick={deleteById}>delete</button>
+            </div>
             <div>
                 {todoItems.map(a => <TodoItem id={a.id} title={a.title} text={a.text} state={State.Open}/>)}
             </div>
