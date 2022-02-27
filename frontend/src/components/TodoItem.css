@@ -1,4 +1,6 @@
 .post-field{
-    display: grid;
-    justify-content: left;
+    border-style: solid;
+    border-radius: 5px;
+    width: 50%;
+
 }

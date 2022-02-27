@@ -11,10 +11,8 @@ export default function TodoList() {
     const [id, setId] = useState('')
     const [state, setState] = useState(State.Open)
     const requestBody = {
-        id: id,
         title: title,
         text: text,
-        state: State.Open
     }
 
 
@@ -49,7 +47,7 @@ export default function TodoList() {
     }
 
     const deleteById = () => {
-        fetch('http://localhost:8080/todos/{id}', {
+        fetch('http://localhost:8080/todos/'+id, {
             method: 'DELETE',
             body: JSON.stringify(requestBody
               ),
