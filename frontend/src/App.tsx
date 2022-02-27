@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
+import TodoList from "./components/TodoList";
+
 
 function App() {
 
-    useEffect(() => {
-        console.log("i am hooked up")
-
-        fetch('http://localhost:8080/todos').then(response => response.json())
-            .then(todoItems => console.log(todoItems))
-    })
-
     return (
         <div>
-
+            <TodoList />
         </div>
-    );
+    )
 }
 
 export default App;
