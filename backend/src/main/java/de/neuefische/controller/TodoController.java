@@ -11,6 +11,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/todos")
 @RequiredArgsConstructor
+@CrossOrigin
 public class TodoController {
     private final TodoService todoService;
 
