@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {State, TodoElement} from "../model";
+import {State, Todo} from "../model";
 import TodoItem from "./TodoItem"
 import "./TodoList.css"
 
 export default function TodoList() {
 
-    const [todoItems, setTodoItems] = useState([] as Array<TodoElement>)
+    const [todoItems, setTodoItems] = useState([] as Array<Todo>)
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [id, setId] = useState('')
@@ -73,7 +73,7 @@ export default function TodoList() {
             <button onClick={deleteById}>delete</button>
             </div>
             <div>
-                {todoItems.map(a => <TodoItem id={a.id} title={a.title} text={a.text} state={State.Open}/>)}
+
             </div>
 
         </div>

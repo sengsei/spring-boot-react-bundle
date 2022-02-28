@@ -1,15 +1,44 @@
-import React, {useState} from 'react';
-import {State, TodoElement} from "../model";
+import React from 'react';
+import {State, Todo} from "../model";
 import "./TodoItem.css"
 
-const TodoItem = (props: TodoElement ) => {
+interface TodoItemProps {
+    todo: Todo
+    onTodoDeletion: () => void
+    onTodoChange: (todos: Array<Todo>) => void
+}
+
+const TodoItem = (props: TodoItemProps ) => {
+
+    const deleteTodo = () => {
+        fetch(`http://localhost:8080/todos/${props.todo.id}`, {
+            method: 'DELETE'
+        })
+            .then(() => props.onTodoDeletion())
+    }
+
+    const toggle = () => {
+        const newStatus = props.todo.state === State.Open ? State.Done : State.Open
+
+        fetch(`http://localhost:8080/todos/${props.todo.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: props.todo.id,
+                title: props.todo.title,
+                text: props.todo.text,
+                status: newStatus
+            })
+        })
+            .then(response => response.json())
+            .then((todosFromBackend: Array<Todo>) => props.onTodoChange(todosFromBackend))
+    }
 
     return (
-        <div className={"post-field"}>
-            <div>ID: {props.id}</div>
-            <div>Title: {props.title}</div>
-            <div>Text: {props.text}</div>
-            <div>State: {props.state}</div>
+        <div >
+            <div className={props.todo.state === State.Done ? 'selected': ''} onClick={toggle}>{props.todo.title} - {props.todo.text}</div> <button onClick={deleteTodo}>Delete</button>
         </div>
     )
 }

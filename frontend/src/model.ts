@@ -1,13 +1,13 @@
 
-export interface TodoElement {
+export interface Todo {
     id: string
     title: string
     text: string
-    state: State.Open
+    state: State
 }
 
 export enum State {
-    Open,
-    Done
+    Open = 'Open',
+    Done = 'Done'
 }
 
