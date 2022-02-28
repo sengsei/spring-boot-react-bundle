@@ -44,4 +44,10 @@ public class TodoController {
         return todoService.getTodoList();
     }
 
+    @DeleteMapping("/{id}")
+    public Collection<TodoElement> deleteCheckedTodos() {
+        todoService.deleteCheckedTodos();
+        return todoService.getTodoList();
+    }
+
 }

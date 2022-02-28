@@ -1,12 +1,13 @@
 package de.neuefische.service;
 
 import de.neuefische.TodoElement;
+import de.neuefische.TodoState;
 import de.neuefische.repository.TodoRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -40,6 +41,8 @@ public class TodoService {
     }
 
 
-
-
+    public void deleteCheckedTodos() {
+        todoRepo.getTodoList().stream().filter(todo -> todo.getState() == TodoState.Done)
+                .forEach(todo -> todoRepo.delete(todo.getId()));
+    }
 }
