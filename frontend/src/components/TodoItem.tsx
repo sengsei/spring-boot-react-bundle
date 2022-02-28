@@ -29,7 +29,7 @@ const TodoItem = (props: TodoItemProps ) => {
                 id: props.todo.id,
                 title: props.todo.title,
                 text: props.todo.text,
-                status: newStatus
+                state: newStatus
             })
         })
             .then(response => response.json())

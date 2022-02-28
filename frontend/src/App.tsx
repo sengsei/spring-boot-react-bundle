@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import TodoList from "./components/TodoList";
+import React from 'react';
 import Header from "./components/Header";
+import TodoList from "./components/TodoList";
 
 
 function App() {
