@@ -43,6 +43,7 @@ public class TodoService {
 
     public void deleteCheckedTodos() {
         todoRepo.getTodoList().stream().filter(todo -> todo.getState() == TodoState.Done)
+                .toList()
                 .forEach(todo -> todoRepo.delete(todo.getId()));
     }
 }
