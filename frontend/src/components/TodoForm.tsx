@@ -6,7 +6,7 @@ interface TodoFormProps {
     onTodoCreation: (todos: Array<Todo>) => void
 }
 
-export default function TodoForm(){
+export default function TodoForm(props: TodoFormProps){
 
     return (
         <div>
