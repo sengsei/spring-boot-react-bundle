@@ -32,7 +32,7 @@ export default function TodoForm(props: TodoFormProps){
         <div>
             <input type="text" placeholder="Title" value={title} onChange={ev => setTitle(ev.target.value)} />
             <input className={"text-field"} type="text" placeholder="Text" value={text} onChange={ev => setText(ev.target.value)} />
-            <button onClick={addTask} className={"send-button"}>Senden</button>
+            <button onClick={addTask} className={"send-button"}>add Task</button>
 
         </div>
     )
