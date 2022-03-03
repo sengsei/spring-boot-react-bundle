@@ -9,13 +9,13 @@ export default function TodoList() {
     const [todos, setTodos] = useState([] as Array<Todo>)
 
     const fetchAll = () => {
-        fetch('http://localhost:8080/todos')
+        fetch(`${process.env.REACT_APP_DEV_URL}/todos`)
             .then(response => response.json())
             .then((todosFromBackend: Array<Todo>) => setTodos(todosFromBackend))
     }
 
     const deleteChecked = () => {
-        fetch('http://localhost:8080/todos', {
+        fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
             method: 'DELETE'
         })
             .then(response => response.json())

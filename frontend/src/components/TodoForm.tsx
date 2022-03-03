@@ -13,7 +13,7 @@ export default function TodoForm(props: TodoFormProps){
     const[text, setText] = useState('')
 
     const addTask = () => {
-        fetch('http://localhost:8080/todos', {
+        fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
