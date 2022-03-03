@@ -14,16 +14,30 @@ export default function TodoList() {
             .then((todosFromBackend: Array<Todo>) => setTodos(todosFromBackend))
     }
 
+    const deleteChecked = () => {
+        fetch('http://localhost:8080/todos', {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then((todosFromBackend: Array<Todo>) => setTodos(todosFromBackend))
+    }
+
     useEffect(() => {
         fetchAll()
     }, []);
 
     return (
-        <div>
-           <TodoForm onTodoCreation={setTodos}/>
-            {todos.map(todo => <TodoItem key= {todo.id} todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} />)}
+        <div className="todo-list">
+            <div>
+                <TodoForm onTodoCreation={setTodos} />
+            </div>
+            <div>
+                <button onClick={deleteChecked}>Delete all checked</button>
+            </div>
+            <ul>
+                {todos.map(todo => <li key={todo.id}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></li>)}
+            </ul>
         </div>
-
     )
 
 }

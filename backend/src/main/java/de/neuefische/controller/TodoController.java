@@ -39,8 +39,13 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public Collection<TodoElement> deleteTodo(@PathVariable String id) {
+    public void deleteTodo(@PathVariable String id) {
         todoService.deleteTodo(id);
+    }
+
+    @DeleteMapping()
+    public Collection<TodoElement> deleteCheckedTodos() {
+        todoService.deleteCheckedTodos();
         return todoService.getTodoList();
     }
 
