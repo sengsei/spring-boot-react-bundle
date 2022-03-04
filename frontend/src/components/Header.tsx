@@ -3,6 +3,6 @@ import "./Header.css"
 export default function Header() {
 
     return(
-       <h1 className='headertest'>Minimalistic ToDo-App</h1>
+       <h1 className='headertest'>Minimal ToDo-App</h1>
     )
 }

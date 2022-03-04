@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {State, Todo} from "../model";
 import "./TodoItem.css"
 import {useTranslation} from "react-i18next"
@@ -11,6 +11,7 @@ interface TodoItemProps {
 
 const TodoItem = (props: TodoItemProps ) => {
     const {t} = useTranslation()
+    const[toggleErrorMessage, setToggleErrorMessage] = useState('')
 
     const deleteTodo = () => {
         fetch(`${process.env.REACT_APP_DEV_URL}/todos/${props.todo.id}`, {
@@ -34,13 +35,23 @@ const TodoItem = (props: TodoItemProps ) => {
                 state: newStatus
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok){
+                    return response.json()
+                }
+                throw Error('Da gibt es nichts zu Togglen!')
+
+            })
             .then((todosFromBackend: Array<Todo>) => props.onTodoChange(todosFromBackend))
+            .catch(e => setToggleErrorMessage(e.message))
     }
 
     return (
         <div >
-            <div className={props.todo.state === State.Done ? 'selected': ''} onClick={toggle}>{props.todo.title} - {props.todo.text}</div> <button onClick={deleteTodo}>{t('delete')}</button>
+            {toggleErrorMessage ? <h1>{toggleErrorMessage}</h1> : ''}
+            <div className={props.todo.state === State.Done ? 'selected': ''}
+                 onClick={toggle}>{props.todo.title} - {props.todo.text}</div>
+            <button onClick={deleteTodo}>{t('delete')}</button>
         </div>
     )
 }

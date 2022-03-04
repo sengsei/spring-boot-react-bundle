@@ -9,22 +9,39 @@ export default function TodoList() {
 
     const [todos, setTodos] = useState([] as Array<Todo>)
     const {t} = useTranslation();
+    const[errorMessage, setErrorMessage] = useState('')
+    const[deleteErrorMessage, setDeleteErrorMessage] = useState('')
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_DEV_URL}/todos`)
-            .then(response => response.json())
+            .then(response =>
+            {
+                if(response.ok){
+                    return  response.json()
+                }
+                throw new Error('Es sind keine Todos zum Anzeigen vorhanden!')
+
+            })
             .then((todosFromBackend: Array<Todo>) => setTodos(todosFromBackend))
+            .catch((e: Error) => setErrorMessage(e.message))
     }
 
     const deleteChecked = () => {
         fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
             method: 'DELETE'
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok){
+                    return response.json()
+                }
+                throw new Error('Die zu löschende Nachricht existiert nicht!')
+            } )
             .then((todosFromBackend: Array<Todo>) => setTodos(todosFromBackend))
+            .catch(e => setDeleteErrorMessage(e.message))
     }
 
     useEffect(() => {
+        setTimeout(() => setErrorMessage(''), 10000)
         fetchAll()
     }, []);
 
@@ -34,10 +51,16 @@ export default function TodoList() {
                 <TodoForm onTodoCreation={setTodos} />
             </div>
             <div>
-                <button onClick={deleteChecked}>{t('delete-checked')}</button>
+                {
+                    deleteErrorMessage ? <h1>{deleteErrorMessage}</h1> : <button onClick={deleteChecked}>{t('delete-checked')}</button>
+                }
+
             </div>
             <ul>
-                {todos.map(todo => <li key={todo.id}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></li>)}
+                {
+                    errorMessage ? <h1>{errorMessage}</h1>
+                        :
+                    todos.map(todo => <li key={todo.id}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></li>)}
             </ul>
         </div>
     )

@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import "./TodoForm.css"
 import {useTranslation} from "react-i18next";
 import LanguageSelection from "./LanguageSelection";
+import {Link} from "react-router-dom";
+import About from "./About";
 
 
 interface TodoFormProps {
@@ -13,10 +15,12 @@ export default function TodoForm(props: TodoFormProps){
 
     const[title, setTitle] = useState(localStorage.getItem('title') ?? '')
     const[text, setText] = useState(localStorage.getItem('text') ?? '')
+    const[addErrorMessage, setAddErrorMessage] = useState('');
 
     const{t} = useTranslation()
 
     useEffect(() => {
+        setTimeout(() => setAddErrorMessage(''), 10000)
         localStorage.setItem('title', title)
         localStorage.setItem('text', text)
     } , [title, text]);
@@ -34,17 +38,23 @@ export default function TodoForm(props: TodoFormProps){
                 text: text
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok){
+                    return response.json()
+                }
+                throw Error('Eine Todo kann nicht hinzugefügt werden.')
+            } )
             .then((todosFromBackend: Array<Todo>) => props.onTodoCreation(todosFromBackend))
-
+            .catch(e => setAddErrorMessage(e.message))
     }
 
     return (
         <div>
             <LanguageSelection/>
+            <div> <Link to={`About`}>About</Link></div>
             <input type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
             <input className={"text-field"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
-            <button onClick={addTask} className={"send-button"}>{t('send')}</button>
+            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} className={"send-button"}>{t('send')}</button> }
         </div>
     )
 }

@@ -1,6 +1,10 @@
 import React from 'react';
 import Header from "./components/Header";
 import TodoList from "./components/TodoList";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import About from "./components/About";
+
+
 
 
 function App() {
@@ -8,7 +12,12 @@ function App() {
     return (
         <div>
             <Header/>
-            <TodoList />
+            <BrowserRouter>
+                <Routes>
+                    <Route path={'/'} element={<TodoList/>}/>
+                    <Route path={'about'} element={<About/>}/>
+                </Routes>
+            </BrowserRouter>
         </div>
     )
 }
