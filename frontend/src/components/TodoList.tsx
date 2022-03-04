@@ -3,10 +3,12 @@ import {Todo} from "../model";
 import "./TodoList.css"
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
+import {useTranslation} from "react-i18next";
 
 export default function TodoList() {
 
     const [todos, setTodos] = useState([] as Array<Todo>)
+    const {t} = useTranslation();
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_DEV_URL}/todos`)
@@ -32,7 +34,7 @@ export default function TodoList() {
                 <TodoForm onTodoCreation={setTodos} />
             </div>
             <div>
-                <button onClick={deleteChecked}>Delete all checked</button>
+                <button onClick={deleteChecked}>{t('delete-checked')}</button>
             </div>
             <ul>
                 {todos.map(todo => <li key={todo.id}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></li>)}
