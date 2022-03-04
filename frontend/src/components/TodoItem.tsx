@@ -1,6 +1,7 @@
 import React from 'react';
 import {State, Todo} from "../model";
 import "./TodoItem.css"
+import {useTranslation} from "react-i18next"
 
 interface TodoItemProps {
     todo: Todo
@@ -9,6 +10,7 @@ interface TodoItemProps {
 }
 
 const TodoItem = (props: TodoItemProps ) => {
+    const {t} = useTranslation()
 
     const deleteTodo = () => {
         fetch(`${process.env.REACT_APP_DEV_URL}/todos/${props.todo.id}`, {
@@ -38,7 +40,7 @@ const TodoItem = (props: TodoItemProps ) => {
 
     return (
         <div >
-            <div className={props.todo.state === State.Done ? 'selected': ''} onClick={toggle}>{props.todo.title} - {props.todo.text}</div> <button onClick={deleteTodo}>Delete</button>
+            <div className={props.todo.state === State.Done ? 'selected': ''} onClick={toggle}>{props.todo.title} - {props.todo.text}</div> <button onClick={deleteTodo}>{t('delete')}</button>
         </div>
     )
 }
