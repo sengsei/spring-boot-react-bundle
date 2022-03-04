@@ -1,5 +1,5 @@
 import {Todo} from "../model";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import "./TodoForm.css"
 import {useTranslation} from "react-i18next";
 import LanguageSelection from "./LanguageSelection";
@@ -11,13 +11,19 @@ interface TodoFormProps {
 
 export default function TodoForm(props: TodoFormProps){
 
-    const[title, setTitle] = useState('')
-    const[text, setText] = useState('')
-
+    const[title, setTitle] = useState(localStorage.getItem('title') ?? '')
+    const[text, setText] = useState(localStorage.getItem('text') ?? '')
 
     const{t} = useTranslation()
 
+    useEffect(() => {
+        localStorage.setItem('title', title)
+        localStorage.setItem('text', text)
+    } , [title, text]);
+
     const addTask = () => {
+        setTitle('')
+        setText('')
         fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
             method: 'POST',
             headers: {
