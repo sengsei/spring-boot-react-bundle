@@ -1,6 +1,5 @@
 import {Todo} from "../model";
 import {useEffect, useState} from "react";
-import "./TodoForm.css"
 import {useTranslation} from "react-i18next";
 import LanguageSelection from "./LanguageSelection";
 import {Link} from "react-router-dom";
@@ -49,12 +48,12 @@ export default function TodoForm(props: TodoFormProps){
     }
 
     return (
-        <div>
+        <div className={'space-x-2 space-y-1'}>
             <LanguageSelection/>
             <div> <Link to={`About`}>About</Link></div>
-            <input type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
-            <input className={"text-field"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
-            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} className={"send-button"}>{t('send')}</button> }
+            <input className={'border-2 rounded border-black'} type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
+            <input className={"border-2 rounded border-black"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
+            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} className={"bg-slate-200"}>{t('send')}</button> }
         </div>
     )
 }

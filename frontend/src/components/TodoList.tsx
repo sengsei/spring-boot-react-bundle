@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Todo} from "../model";
-import "./TodoList.css"
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
 import {useTranslation} from "react-i18next";
@@ -46,13 +45,13 @@ export default function TodoList() {
     }, []);
 
     return (
-        <div className="todo-list">
+        <div className="space-y-1 space-x-2">
             <div>
                 <TodoForm onTodoCreation={setTodos} />
             </div>
-            <div>
+            <div className={'space-y-1'}>
                 {
-                    deleteErrorMessage ? <h1>{deleteErrorMessage}</h1> : <button onClick={deleteChecked}>{t('delete-checked')}</button>
+                    deleteErrorMessage ? <h1>{deleteErrorMessage}</h1> : <button className={'bg-slate-200'} onClick={deleteChecked}>{t('delete-checked')}</button>
                 }
 
             </div>

@@ -1,8 +1,11 @@
-import "./Header.css"
+
 
 export default function Header() {
 
     return(
-       <h1 className='headertest'>Minimal ToDo-App</h1>
+        <div>
+            <h1 className="text-3xl font-bold">Minimal ToDo-App</h1>
+        </div>
+
     )
 }
