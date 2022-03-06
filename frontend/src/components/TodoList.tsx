@@ -55,11 +55,11 @@ export default function TodoList() {
                 }
 
             </div>
-            <div>
+            <div className={'bg-yellow-100 w-1/2 '}>
                 {
                     errorMessage ? <h1>{errorMessage}</h1>
                         :
-                    todos.map((todo) => <div key={todo.id} data-testid={'add-task'}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></div>)}
+                    todos.map((todo) => <div  key={todo.id} data-testid={'add-task'}><TodoItem todo={todo} onTodoDeletion={fetchAll} onTodoChange={setTodos} /></div>)}
             </div>
         </div>
     )

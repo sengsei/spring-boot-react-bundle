@@ -49,8 +49,8 @@ const TodoItem = (props: TodoItemProps ) => {
     return (
         <div >
             {toggleErrorMessage ? <h1>{toggleErrorMessage}</h1> : ''}
-            <div className={props.todo.state === State.Done ? 'selected': ''}
-                 onClick={toggle}>{props.todo.title} - {props.todo.text}</div>
+            <div data-testid={'toggleMessage'} className={props.todo.state === State.Done ? 'selected': ''}
+                  onClick={toggle}>{props.todo.title} - {props.todo.text}</div>
             <button className={'bg-slate-200'} onClick={deleteTodo}>{t('delete')}</button>
         </div>
     )

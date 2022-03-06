@@ -4,8 +4,8 @@ export default function About(){
 
     return(
         <div>
-         <div>About</div>
-            <Link to={'/'}>TodoList</Link>
+         <div>minimale ToDo-App</div>
+            <Link to={'/'}>Home</Link>
         </div>
 )
 }

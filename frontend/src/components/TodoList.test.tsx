@@ -3,7 +3,6 @@ import {MemoryRouter} from "react-router";
 import TodoList from "./TodoList";
 
 
-
 test('that items are added', async () => {
     jest.spyOn(global, 'fetch').mockImplementation(() => {
         return Promise.resolve({
