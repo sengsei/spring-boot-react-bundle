@@ -12,7 +12,7 @@ export default function TodoList() {
     const[deleteErrorMessage, setDeleteErrorMessage] = useState('')
 
     const fetchAll = () => {
-        fetch(`${process.env.REACT_APP_DEV_URL}/todos`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`)
             .then(response =>
             {
                 if(response.ok){
@@ -26,7 +26,7 @@ export default function TodoList() {
     }
 
     const deleteChecked = () => {
-        fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
             method: 'DELETE'
         })
             .then(response => {

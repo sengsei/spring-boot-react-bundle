@@ -14,7 +14,7 @@ const TodoItem = (props: TodoItemProps ) => {
     const[toggleErrorMessage, setToggleErrorMessage] = useState('')
 
     const deleteTodo = () => {
-        fetch(`${process.env.REACT_APP_DEV_URL}/todos/${props.todo.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'DELETE'
         })
             .then(() => props.onTodoDeletion())
@@ -23,7 +23,7 @@ const TodoItem = (props: TodoItemProps ) => {
     const toggle = () => {
         const newStatus = props.todo.state === State.Open ? State.Done : State.Open
 
-        fetch(`${process.env.REACT_APP_DEV_URL}/todos/${props.todo.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
