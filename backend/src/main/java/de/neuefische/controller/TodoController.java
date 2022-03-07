@@ -16,7 +16,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @GetMapping
-    public Collection<TodoElement> getTodoList(){
+    public Collection<TodoElement> getTodoList() {
         return todoService.getTodoList();
     }
 
@@ -34,8 +34,8 @@ public class TodoController {
 
     @PutMapping("/{id}")
     public Collection<TodoElement> changeTodo(@PathVariable String id, @RequestBody TodoElement todo) {
-        todoService.changeTodo(id, todo);
-        return todoService.getTodoList();
+       todoService.changeTodo(id, todo);
+       return todoService.getTodoList();
     }
 
     @DeleteMapping("/{id}")

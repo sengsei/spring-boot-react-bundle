@@ -1,8 +1,9 @@
 import {Todo} from "../model";
-import {useState} from "react";
-import "./TodoForm.css"
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import LanguageSelection from "./LanguageSelection";
+import {Link} from "react-router-dom";
+
 
 
 interface TodoFormProps {
@@ -11,14 +12,22 @@ interface TodoFormProps {
 
 export default function TodoForm(props: TodoFormProps){
 
-    const[title, setTitle] = useState('')
-    const[text, setText] = useState('')
-
+    const[title, setTitle] = useState(localStorage.getItem('title') ?? '')
+    const[text, setText] = useState(localStorage.getItem('text') ?? '')
+    const[addErrorMessage, setAddErrorMessage] = useState('');
 
     const{t} = useTranslation()
 
+    useEffect(() => {
+        setTimeout(() => setAddErrorMessage(''), 10000)
+        localStorage.setItem('title', title)
+        localStorage.setItem('text', text)
+    } , [title, text]);
+
     const addTask = () => {
-        fetch(`${process.env.REACT_APP_DEV_URL}/todos`, {
+        setTitle('')
+        setText('')
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,17 +37,23 @@ export default function TodoForm(props: TodoFormProps){
                 text: text
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok){
+                    return response.json()
+                }
+                throw Error('Eine Todo kann nicht hinzugefügt werden.')
+            } )
             .then((todosFromBackend: Array<Todo>) => props.onTodoCreation(todosFromBackend))
-
+            .catch(e => setAddErrorMessage(e.message))
     }
 
     return (
-        <div>
+        <div className={'space-x-2 space-y-1'}>
             <LanguageSelection/>
-            <input type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
-            <input className={"text-field"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
-            <button onClick={addTask} className={"send-button"}>{t('send')}</button>
+            <div> <Link to={`About`}>About</Link></div>
+            <input className={'border-2 rounded border-black'} type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
+            <input className={"border-2 rounded border-black"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
+            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} data-testid={'add-task-new'} className={"bg-slate-200"}>{t('send')}</button> }
         </div>
     )
 }
