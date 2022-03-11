@@ -1,12 +1,16 @@
 package de.neuefische.repository;
 
 import de.neuefische.TodoElement;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-public class TodoRepo {
+public interface TodoRepo extends MongoRepository<TodoElement, String> {
+
+
+    /*
     private final Map<String, TodoElement> todoList = new HashMap<>();
 
     public Collection<TodoElement> getTodoList(){
@@ -24,4 +28,6 @@ public class TodoRepo {
     public void delete(String id){
         todoList.remove(id);
     }
+    */
+
 }
