@@ -9,6 +9,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -25,7 +27,8 @@ public class TodoControllerIntegrationTest {
         ResponseEntity<TodoElement[]> response1 = restTemplate.postForEntity("/todos", todo1, TodoElement[].class);
 
         assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        Assertions.assertThat(response1.getBody()).containsExactlyInAnyOrder(todo1);
+        assertThat(Objects.requireNonNull(response1.getBody())[0].getTitle()).isEqualTo("Sport");
+        assertThat(response1.getBody()[0].getId()).isNotNull();
 
 
         TodoElement todo2 = new TodoElement("Java");
@@ -33,15 +36,14 @@ public class TodoControllerIntegrationTest {
         ResponseEntity<TodoElement[]> response2 = restTemplate.postForEntity("/todos", todo2, TodoElement[].class);
 
         assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response2.getBody()).containsExactlyInAnyOrder(todo1, todo2);
-
+        assertThat(Objects.requireNonNull(response2.getBody())[0].getTitle()).isEqualTo(("Sport"));
+        assertThat(response2.getBody()[1].getTitle()).isEqualTo("Java");
 
         restTemplate.delete("/todos/" + todo1.getId());
         ResponseEntity<TodoElement[]> response3 = restTemplate.getForEntity("/todos", TodoElement[].class);
 
         assertThat(response3.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response3.getBody()).containsExactlyInAnyOrder(todo2);
-
+        assertThat(Objects.requireNonNull(response3.getBody())[1].getTitle()).isEqualTo("Java");
 
         TodoElement todoWithChanges = new TodoElement();
         todoWithChanges.setId(todo2.getId());
@@ -53,7 +55,7 @@ public class TodoControllerIntegrationTest {
         ResponseEntity<TodoElement[]> response4 = restTemplate.getForEntity("/todos", TodoElement[].class);
 
         assertThat(response4.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response4.getBody()).containsExactlyInAnyOrder(todoWithChanges);
+        assertThat(Objects.requireNonNull(response4.getBody())[1].getTitle()).isEqualTo("Java");
 
     }
 }

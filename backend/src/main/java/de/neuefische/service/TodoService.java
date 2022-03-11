@@ -33,11 +33,7 @@ public class TodoService {
     }
 
     public void deleteTodo(String id){
-        Optional<TodoElement> todo = todoRepo.findById(id);
-        if (todo.isPresent()){
-            todoRepo.delete(todo.get());
-        }
-
+       todoRepo.deleteById(id);
     }
 
     public void changeTodo(String id, TodoElement changedTodo){
@@ -49,11 +45,7 @@ public class TodoService {
             todoUnwrapped.setText(changedTodo.getText());
             todoRepo.save(todoUnwrapped);
         }
-
-
-
     }
-
 
     public void deleteCheckedTodos() {
         todoRepo.findAll().stream().filter(todo -> todo.getState() == TodoState.Done)
