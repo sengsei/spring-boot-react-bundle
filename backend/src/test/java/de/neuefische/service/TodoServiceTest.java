@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class TodoServiceTest {
@@ -70,14 +71,17 @@ class TodoServiceTest {
     @Test
     void shouldDeleteTodo() {
         TodoElement todo1 = new TodoElement();
-        todo1.setId("777");
+        String id = todo1.getId();
 
         TodoRepo repo = Mockito.mock(TodoRepo.class);
+        when(repo.findById(todo1.getId())).thenReturn(Optional.of(todo1));
         TodoService todoService = new TodoService(repo);
 
+        //When
         todoService.deleteTodo(todo1.getId());
-        when(repo.findById(todo1.getId())).thenReturn(null);
-       // Mockito.verify(repo).delete(todo1);
+
+        //Then
+        verify(repo).deleteById(id);
     }
 
     @Test
