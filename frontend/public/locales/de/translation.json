@@ -3,5 +3,7 @@
   "text": "Beschreibung",
   "send": "Aufgabe hinzufügen",
   "delete-checked": "Lösche erledigte Einträge",
-  "delete": "Löschen"
+  "delete": "Löschen",
+  "edit": "Ändern",
+  "confirm": "Bestätigen"
 }
