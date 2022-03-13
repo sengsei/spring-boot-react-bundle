@@ -76,27 +76,32 @@ const TodoItem = (props: TodoItemProps) => {
             {
                 editMode
                     ?
-                    <div>
+                    <div className="space-x-2 space-y-1">
 
                         <input className={'border-2 rounded border-black'} type="text"
                                value={titleToEdit}
                                onChange={ev => setTitleToEdit(ev.target.value)}
                            />
-                        <input className={'border-2 rounded border-black'} type="text"
+                        <input className={'border-2 rounded border-black '} type="text"
                                value={textToEdit}
                                onChange={ev => setTextToEdit(ev.target.value)}
                              />
-                        <button className={'bg-slate-200'} onClick={editTodo}>{t('confirm')}</button>
+                        <button className={'bg-slate-200 hover:bg-slate-400 rounded px-2'} onClick={editTodo}>{t('confirm')}</button>
 
                     </div>
                     :
 
-                    <div className={'space-x-1'}>
+                    <div className={'space-x-1 relative m-auto'}>
                         {toggleErrorMessage ? <h1>{toggleErrorMessage}</h1> : ''}
                         <div data-testid={'toggleMessage'} className={props.todo.state === State.Done ? 'selected' : ''}
                              onClick={toggle}>{props.todo.title} - {props.todo.text}</div>
-                        <button className={'bg-slate-200'} onClick={deleteTodo}>{t('delete')}</button>
-                        <button className={'bg-slate-200'} onClick={() => setEditMode(true)}>{t('edit')}</button>
+                        <div className={"flex flex-row space-x-2"}>
+                            <button className={'bg-slate-200 absolute top-0 right-20 rounded hover:bg-slate-400 px-2'} onClick={() => setEditMode(true)}>{t('edit')}</button>
+                            <button className={'bg-slate-200 absolute bottom-0 right-0 rounded hover:bg-slate-400 px-2'} onClick={deleteTodo}>{t('delete')}</button>
+                        </div>
+
+
+
                     </div>
             }
         </div>

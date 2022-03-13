@@ -5,7 +5,7 @@ export default function LanguageSelection (){
         i18n.changeLanguage(lng)
     }
     return (
-            <div className={'space-x-1 ml-2'}>
+            <div className={'space-x-1 mr-2'}>
                 <button className={'bg-gray-400'} onClick={() => changeLanguage('de')}>de</button>
                 <button className={'bg-gray-400'} onClick={() => changeLanguage('en')}>en</button>
             </div>

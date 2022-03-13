@@ -53,7 +53,7 @@ export default function TodoForm(props: TodoFormProps){
             <div> <Link to={`About`}>About</Link></div>
             <input className={'border-2 rounded border-black'} type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
             <input className={"border-2 rounded border-black"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />
-            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} data-testid={'add-task-new'} className={"bg-slate-200"}>{t('send')}</button> }
+            {addErrorMessage ? <h1>{addErrorMessage}</h1> : <button onClick={addTask} data-testid={'add-task-new'} className={"bg-slate-200 hover:bg-slate-400 px-2 rounded"}>{t('send')}</button> }
         </div>
     )
 }
