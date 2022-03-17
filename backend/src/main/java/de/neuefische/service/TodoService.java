@@ -1,7 +1,7 @@
 package de.neuefische.service;
 
-import de.neuefische.TodoElement;
-import de.neuefische.TodoState;
+import de.neuefische.model.TodoElement;
+import de.neuefische.model.TodoState;
 import de.neuefische.repository.TodoRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

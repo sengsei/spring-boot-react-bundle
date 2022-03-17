@@ -1,7 +1,7 @@
 package de.neuefische.service;
 
-import de.neuefische.TodoElement;
-import de.neuefische.TodoState;
+import de.neuefische.model.TodoElement;
+import de.neuefische.model.TodoState;
 import de.neuefische.repository.TodoRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

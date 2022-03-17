@@ -1,7 +1,6 @@
 package de.neuefische.controller;
 
-import de.neuefische.TodoElement;
-import org.assertj.core.api.Assertions;
+import de.neuefische.model.TodoElement;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

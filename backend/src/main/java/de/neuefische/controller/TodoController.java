@@ -1,6 +1,6 @@
 package de.neuefische.controller;
 
-import de.neuefische.TodoElement;
+import de.neuefische.model.TodoElement;
 import de.neuefische.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

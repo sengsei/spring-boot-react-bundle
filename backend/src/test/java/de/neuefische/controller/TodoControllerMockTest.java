@@ -1,6 +1,6 @@
 package de.neuefische.controller;
 
-import de.neuefische.TodoElement;
+import de.neuefische.model.TodoElement;
 import de.neuefische.service.TodoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;

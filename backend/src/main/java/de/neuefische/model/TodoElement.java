@@ -1,4 +1,4 @@
-package de.neuefische;
+package de.neuefische.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

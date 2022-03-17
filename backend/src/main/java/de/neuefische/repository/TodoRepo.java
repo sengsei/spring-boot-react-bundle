@@ -1,6 +1,6 @@
 package de.neuefische.repository;
 
-import de.neuefische.TodoElement;
+import de.neuefische.model.TodoElement;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
