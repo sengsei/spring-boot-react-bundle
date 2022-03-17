@@ -15,6 +15,7 @@ public class TodoElement {
     private String title = "";
     private String text = "";
     private TodoState state = TodoState.Open;
+    private String userId;
 
     public TodoElement(String title){
         this.title = title;

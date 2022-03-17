@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -14,6 +15,7 @@ import java.util.Collection;
 @CrossOrigin
 public class TodoController {
     private final TodoService todoService;
+
 
     @GetMapping
     public Collection<TodoElement> getTodoList() {
@@ -27,8 +29,9 @@ public class TodoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Collection<TodoElement> addTodo(@RequestBody TodoElement todoElement) {
-        todoService.addTodo(todoElement);
+    public Collection<TodoElement> addTodo(@RequestBody TodoElement todoElement, Principal principal) {
+        String username = principal.getName();
+        todoService.addTodo(todoElement, username);
         return todoService.getTodoList();
     }
 
