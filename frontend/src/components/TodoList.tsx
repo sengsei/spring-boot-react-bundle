@@ -51,11 +51,11 @@ export default function TodoList() {
             </div>
             <div className={'space-y-1'}>
                 {
-                    deleteErrorMessage ? <h1>{deleteErrorMessage}</h1> : <button className={'bg-slate-200'} onClick={deleteChecked}>{t('delete-checked')}</button>
+                    deleteErrorMessage ? <h1>{deleteErrorMessage}</h1> : <button className={'bg-slate-200 hover:bg-slate-400 px-2 rounded'} onClick={deleteChecked}>{t('delete-checked')}</button>
                 }
 
             </div>
-            <div className={'bg-yellow-100 w-1/2 '}>
+            <div className={'bg-yellow-100 max-w-xl m-auto mt-20'}>
                 {
                     errorMessage ? <h1>{errorMessage}</h1>
                         :

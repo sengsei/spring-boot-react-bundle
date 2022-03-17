@@ -10,7 +10,7 @@ import About from "./components/About";
 function App() {
 
     return (
-        <div>
+        <div className={"max-w-xl m-auto mt-20"}>
             <Header/>
             <BrowserRouter>
                 <Routes>
