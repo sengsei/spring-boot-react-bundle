@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TodoRepo extends MongoRepository<TodoElement, String> {
         List<TodoElement> findAllByUserId(String userID);
+        void deleteTodoElementByIdAndUserId(String id, String userID);
 }

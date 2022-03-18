@@ -4,6 +4,7 @@ import de.neuefische.model.TodoElement;
 import de.neuefische.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -18,8 +19,8 @@ public class TodoController {
 
 
     @GetMapping
-    public Collection<TodoElement> getTodoList() {
-        return todoService.getTodoList();
+    public Collection<TodoElement> getTodoList(Principal principal) {
+        return todoService.getTodoList(principal);
     }
 
     @GetMapping("/{id}")
@@ -30,26 +31,25 @@ public class TodoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Collection<TodoElement> addTodo(@RequestBody TodoElement todoElement, Principal principal) {
-        String email = principal.getName();
-        todoService.addTodo(todoElement, email);
-        return todoService.getTodoList();
+        todoService.addTodo(todoElement, principal);
+        return todoService.getTodoList(principal);
     }
 
     @PutMapping("/{id}")
-    public Collection<TodoElement> changeTodo(@PathVariable String id, @RequestBody TodoElement todo) {
+    public Collection<TodoElement> changeTodo(@PathVariable String id, @RequestBody TodoElement todo, Principal principal) {
        todoService.changeTodo(id, todo);
-       return todoService.getTodoList();
+       return todoService.getTodoList(principal);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTodo(@PathVariable String id) {
-        todoService.deleteTodo(id);
+    public void deleteTodo(@PathVariable String id, Principal principal) {
+        todoService.deleteTodo(id, principal);
     }
 
     @DeleteMapping()
-    public Collection<TodoElement> deleteCheckedTodos() {
+    public Collection<TodoElement> deleteCheckedTodos(Principal principal) {
         todoService.deleteCheckedTodos();
-        return todoService.getTodoList();
+        return todoService.getTodoList(principal);
     }
 
 }
