@@ -10,9 +10,15 @@ export default function TodoList() {
     const {t} = useTranslation();
     const[errorMessage, setErrorMessage] = useState('')
     const[deleteErrorMessage, setDeleteErrorMessage] = useState('')
+    const[token, setToken] = useState(localStorage.getItem("token"))
 
     const fetchAll = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todos`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
             .then(response =>
             {
                 if(response.ok){
@@ -27,7 +33,10 @@ export default function TodoList() {
 
     const deleteChecked = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                "Authorization": "Bearer " + token
+            }
         })
             .then(response => {
                 if (response.ok){

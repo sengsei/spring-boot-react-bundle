@@ -15,6 +15,7 @@ export default function TodoForm(props: TodoFormProps){
     const[title, setTitle] = useState(localStorage.getItem('title') ?? '')
     const[text, setText] = useState(localStorage.getItem('text') ?? '')
     const[addErrorMessage, setAddErrorMessage] = useState('');
+    const[token, setToken] = useState(localStorage.getItem("token"))
 
     const{t} = useTranslation()
 
@@ -30,7 +31,8 @@ export default function TodoForm(props: TodoFormProps){
         fetch(`${process.env.REACT_APP_BASE_URL}/todos`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify({
                 title: title,
