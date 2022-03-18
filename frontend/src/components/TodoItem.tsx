@@ -15,9 +15,10 @@ const TodoItem = (props: TodoItemProps) => {
     const [titleToEdit, setTitleToEdit] = useState(props.todo.title)
     const [textToEdit, setTextToEdit] = useState(props.todo.text)
     const [editMode, setEditMode] = useState(false)
-    const[token, setToken] = useState(localStorage.getItem("token"))
+
 
     const deleteTodo = () => {
+        const token = localStorage.getItem("token")
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'DELETE',
             headers: {
@@ -28,6 +29,7 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const toggle = () => {
+        const token = localStorage.getItem("token")
         const newStatus = props.todo.state === State.Open ? State.Done : State.Open
 
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
@@ -55,6 +57,7 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const editTodo = () => {
+        const token = localStorage.getItem("token")
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'PUT',
             headers: {
