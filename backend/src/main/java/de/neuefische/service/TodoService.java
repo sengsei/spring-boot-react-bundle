@@ -22,8 +22,8 @@ public class TodoService {
     private final TodoRepo todoRepo;
     private final UserRepository userRepository;
 
-    public void addTodo(TodoElement todoElement, String username) {
-        Optional<UserDocument> user =  userRepository.findByEmail(username);
+    public void addTodo(TodoElement todoElement, String email) {
+        Optional<UserDocument> user =  userRepository.findByEmail(email);
         todoElement.setUserId(user.get().getId());
         todoRepo.save(todoElement);
     }

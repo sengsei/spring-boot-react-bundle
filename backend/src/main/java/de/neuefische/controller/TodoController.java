@@ -30,8 +30,8 @@ public class TodoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Collection<TodoElement> addTodo(@RequestBody TodoElement todoElement, Principal principal) {
-        String username = principal.getName();
-        todoService.addTodo(todoElement, username);
+        String email = principal.getName();
+        todoService.addTodo(todoElement, email);
         return todoService.getTodoList();
     }
 
