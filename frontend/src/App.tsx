@@ -8,23 +8,24 @@ import Register from "./components/Register";
 import Logout from "./components/Logout";
 
 
-
-
 function App() {
 
     return (
+
+
         <div className={"max-w-xl m-auto mt-20"}>
             <Header/>
             <Logout/>
             <BrowserRouter>
                 <Routes>
                     <Route path={'/'} element={<TodoList/>}/>
-                    <Route path={'about'} element={<About/>}/>
-                    <Route path={'login'} element={<Login/>}/>
-                    <Route path={'register'} element={<Register/>}/>
+                    <Route path={'/about'} element={<About/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/register'} element={<Register/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
+
     )
 }
 

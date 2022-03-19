@@ -1,10 +1,12 @@
 import {useState} from "react";
+import {useNavigate} from "react-router";
 
 
 const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();
 
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/login`, {
@@ -22,6 +24,7 @@ const Login = () => {
             })
             .then((responseBody: string) => {
                 localStorage.setItem("token", responseBody)
+                navigate("/")
             })
 
 
