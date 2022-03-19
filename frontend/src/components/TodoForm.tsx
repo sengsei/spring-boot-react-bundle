@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import LanguageSelection from "./LanguageSelection";
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 
 
@@ -15,6 +16,7 @@ export default function TodoForm(props: TodoFormProps){
     const[title, setTitle] = useState(localStorage.getItem('title') ?? '')
     const[text, setText] = useState(localStorage.getItem('text') ?? '')
     const[addErrorMessage, setAddErrorMessage] = useState('');
+    const navigate = useNavigate()
 
 
     const{t} = useTranslation()
@@ -50,9 +52,15 @@ export default function TodoForm(props: TodoFormProps){
             .catch(e => setAddErrorMessage(e.message))
     }
 
+    const logout = () => {
+        localStorage.setItem("token", "")
+        navigate("/login")
+    }
+
     return (
         <div className={'space-x-2 space-y-1'}>
             <LanguageSelection/>
+            <button onClick={logout}>Logout</button>
             <div> <Link to={`About`}>About</Link></div>
             <input className={'border-2 rounded border-black'} type="text" placeholder={t('title')} value={title} onChange={ev => setTitle(ev.target.value)} />
             <input className={"border-2 rounded border-black"} type="text" placeholder={t('text')} value={text} onChange={ev => setText(ev.target.value)} />

@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import About from "./components/About";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Logout from "./components/Logout";
+
 
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
 
         <div className={"max-w-xl m-auto mt-20"}>
             <Header/>
-            <Logout/>
             <BrowserRouter>
                 <Routes>
                     <Route path={'/'} element={<TodoList/>}/>
