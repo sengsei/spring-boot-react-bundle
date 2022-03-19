@@ -5,7 +5,7 @@ const Register = () => {
 
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
-    const[token, setToken] = useState("")
+
 
     const register = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
