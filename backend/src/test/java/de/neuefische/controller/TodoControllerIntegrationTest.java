@@ -1,16 +1,22 @@
 package de.neuefische.controller;
 
+
+import de.neuefische.model.LoginData;
 import de.neuefische.model.TodoElement;
+import de.neuefische.model.UserDocument;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TodoControllerIntegrationTest {
@@ -20,41 +26,39 @@ public class TodoControllerIntegrationTest {
 
     @Test
     void integrationTest() {
+        ResponseEntity<UserDocument> createUserResponse = restTemplate.postForEntity("/api/users", new UserDocument(null, "test@email.de", "123456", "123456", null), UserDocument.class);
+        assertThat(createUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertEquals(Objects.requireNonNull(createUserResponse.getBody()).getEmail(), ("test@email.de"));
 
-        TodoElement todo1 = new TodoElement("Sport");
+        ResponseEntity<String> loginResponse = restTemplate.postForEntity("/api/auth/login", new LoginData("test@email.de", "123456"), String.class);
+        assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(loginResponse.getBody()).isNotBlank();
 
-        ResponseEntity<TodoElement[]> response1 = restTemplate.postForEntity("/todos", todo1, TodoElement[].class);
+        ResponseEntity<String> addTodoResponse = restTemplate.exchange(
+                "/todos",
+                HttpMethod.POST,
+                new HttpEntity<>(new TodoElement("Java"), createHeaders(loginResponse.getBody())),
+                String.class
+        );
 
-        assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(Objects.requireNonNull(response1.getBody())[0].getTitle()).isEqualTo("Sport");
-        assertThat(response1.getBody()[0].getId()).isNotNull();
+        assertThat(addTodoResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertTrue(Objects.requireNonNull(addTodoResponse.getBody()).contains("Java"));
 
+        ResponseEntity<Collection> listAllItemResponse = restTemplate.exchange(
+                "/todos",
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders(loginResponse.getBody())),
+                Collection.class
+        );
 
-        TodoElement todo2 = new TodoElement("Java");
+        assertThat(Objects.requireNonNull(listAllItemResponse.getBody()).size()).isEqualTo(1);
+    }
 
-        ResponseEntity<TodoElement[]> response2 = restTemplate.postForEntity("/todos", todo2, TodoElement[].class);
+    private HttpHeaders createHeaders(String token){
+        String authHeader = "Bearer " + token;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authHeader);
 
-        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(Objects.requireNonNull(response2.getBody())[0].getTitle()).isEqualTo(("Sport"));
-        assertThat(response2.getBody()[1].getTitle()).isEqualTo("Java");
-
-        restTemplate.delete("/todos/" + todo1.getId());
-        ResponseEntity<TodoElement[]> response3 = restTemplate.getForEntity("/todos", TodoElement[].class);
-
-        assertThat(response3.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(Objects.requireNonNull(response3.getBody())[1].getTitle()).isEqualTo("Java");
-
-        TodoElement todoWithChanges = new TodoElement();
-        todoWithChanges.setId(todo2.getId());
-        todoWithChanges.setTitle("Java");
-        todoWithChanges.setText(todo2.getText());
-        todoWithChanges.setState(todo2.getState());
-
-        restTemplate.put("/todos/" + todo2.getId(), todoWithChanges);
-        ResponseEntity<TodoElement[]> response4 = restTemplate.getForEntity("/todos", TodoElement[].class);
-
-        assertThat(response4.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(Objects.requireNonNull(response4.getBody())[1].getTitle()).isEqualTo("Java");
-
+        return headers;
     }
 }
