@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 
 
@@ -8,12 +8,16 @@ const Register = () => {
     const[password, setPassword] = useState("")
     const[vPassword, setVPassword] = useState("")
     const[errorMessage, setErrorMessage] = useState("")
-    const[emptyFieldError, setEmptyFieldError] = useState("")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => setErrorMessage(''), 15000);
+        return () => clearTimeout(timeoutId);
+    }, [errorMessage]);
 
     const register = () => {
         if (!password || !vPassword || !email){
-            setEmptyFieldError('some fields are empty')
+            setErrorMessage('some fields are empty')
         }
         if (password !== vPassword){
             setErrorMessage('password is not the same')
