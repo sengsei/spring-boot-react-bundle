@@ -34,7 +34,7 @@ const Register = () => {
             }
         })
             .then(response => {
-                if (response.status == 201){
+                if (response.status === 201){
                     return response.json()
                 }
                 throw new Error()
