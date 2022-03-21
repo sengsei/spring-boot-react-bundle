@@ -12,5 +12,6 @@ public class UserDocument {
     private String id;
     private String email;
     private String password;
+    private String passwordAgain;
     private String role = "USER";
 }
