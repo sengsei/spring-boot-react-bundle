@@ -23,9 +23,12 @@ public class TodoControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-/*
+
     @Test
     void integrationTest() {
+        TodoElement todo = new TodoElement();
+        todo.setTitle("Java");
+
         ResponseEntity<UserDocument> createUserResponse = restTemplate.postForEntity("/api/users", new UserDocument(null, "test@email.de", "123456", "123456", null), UserDocument.class);
         assertThat(createUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertEquals(Objects.requireNonNull(createUserResponse.getBody()).getEmail(), ("test@email.de"));
@@ -37,7 +40,7 @@ public class TodoControllerIntegrationTest {
         ResponseEntity<String> addTodoResponse = restTemplate.exchange(
                 "/todos",
                 HttpMethod.POST,
-                new HttpEntity<>(new TodoElement("Java"), createHeaders(loginResponse.getBody())),
+                new HttpEntity<>(todo, createHeaders(loginResponse.getBody())),
                 String.class
         );
 
@@ -62,5 +65,5 @@ public class TodoControllerIntegrationTest {
         return headers;
     }
 
- */
+
 }
