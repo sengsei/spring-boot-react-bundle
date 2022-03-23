@@ -23,9 +23,9 @@ public class TodoService {
     private final TodoRepo todoRepo;
     private final UserRepository userRepository;
 
-    public void addTodo(TodoElement todoElement, Principal principal) {
+    public TodoElement addTodo(TodoElement todoElement, Principal principal) {
         todoElement.setUserId(getUserID(principal));
-        todoRepo.save(todoElement);
+        return todoRepo.save(todoElement);
     }
 
     public TodoElement getTodoElementById(String id) {
