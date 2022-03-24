@@ -1,8 +1,11 @@
 package de.neuefische.controller;
 
+import de.neuefische.exception.PasswordNotMatchException;
+import de.neuefische.exception.UserAlreadyExistsException;
 import de.neuefische.model.UserDocument;
 import de.neuefische.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +23,16 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public UserDocument createUser(@RequestBody UserDocument user){
-        if (!Objects.equals(user.getPassword(), user.getPasswordAgain())){
-            throw new IllegalArgumentException();
+    public ResponseEntity<String> createUser(@RequestBody UserDocument user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPasswordAgain(passwordEncoder.encode(user.getPasswordAgain()));
+            userService.createUser(user);
+            return ResponseEntity.status(201).body("user was created");
+        } catch (UserAlreadyExistsException e){
+            return ResponseEntity.status(409).body(e.getMessage());
+        } catch (PasswordNotMatchException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordAgain(passwordEncoder.encode(user.getPasswordAgain()));
-        return userService.createUser(user);
     }
 }

@@ -16,12 +16,6 @@ const Register = () => {
     }, [errorMessage]);
 
     const register = () => {
-        if (!password || !vPassword || !email){
-            setErrorMessage('some fields are empty')
-        }
-        if (password !== vPassword){
-            setErrorMessage('password is not the same')
-        }
         fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
             method:"POST",
             body: JSON.stringify({
@@ -34,10 +28,12 @@ const Register = () => {
             }
         })
             .then(response => {
-                if (response.status === 201){
-                    return response.json()
+                if (response.status === 400){
+                    setErrorMessage('password is not the same')
+                } else if(response.status === 409) {
+                    setErrorMessage('username is in use')
                 }
-                throw new Error()
+
             })
             .then(() => navigate("/login"))
 

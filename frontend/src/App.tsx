@@ -17,8 +17,9 @@ function App() {
             <Header/>
             <BrowserRouter>
                 <Routes>
-                    <Route path={'/'} element={<TodoList/>}/>
+                    <Route path={'/todo'} element={<TodoList/>}/>
                     <Route path={'/about'} element={<About/>}/>
+                    <Route path={'/'} element={<Login/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                     <Route path={'/register'} element={<Register/>}/>
                 </Routes>

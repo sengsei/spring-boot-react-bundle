@@ -14,9 +14,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TodoControllerIntegrationTest {
@@ -26,12 +24,13 @@ public class TodoControllerIntegrationTest {
 
     @Test
     void integrationTest() {
+
         TodoElement todo = new TodoElement();
         todo.setTitle("Java");
 
-        ResponseEntity<UserDocument> createUserResponse = restTemplate.postForEntity("/api/users", new UserDocument(null, "test@email.de", "123456", "123456", null), UserDocument.class);
-        assertThat(createUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertEquals(Objects.requireNonNull(createUserResponse.getBody()).getEmail(), ("test@email.de"));
+        ResponseEntity<String> createUserResponse = restTemplate.postForEntity("/api/users", new UserDocument(null, "test@email.de", "123456", "123456", "USER"), String.class);
+        assertThat(createUserResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(createUserResponse.getBody()).isEqualTo("user was created");
 
         ResponseEntity<String> loginResponse = restTemplate.postForEntity("/api/auth/login", new LoginData("test@email.de", "123456"), String.class);
         assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -54,7 +53,7 @@ public class TodoControllerIntegrationTest {
                 Collection.class
         );
 
-        assertThat(Objects.requireNonNull(listAllItemResponse.getBody()).size()).isEqualTo(1);
+        assertThat(listAllItemResponse.getBody().size()).isEqualTo(1);
     }
 
     private HttpHeaders createHeaders(String token){
@@ -64,6 +63,5 @@ public class TodoControllerIntegrationTest {
 
         return headers;
     }
-
 
 }
