@@ -16,20 +16,27 @@ const TodoItem = (props: TodoItemProps) => {
     const [textToEdit, setTextToEdit] = useState(props.todo.text)
     const [editMode, setEditMode] = useState(false)
 
+
     const deleteTodo = () => {
+        const token = localStorage.getItem("token")
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                "Authorization": "Bearer " + token
+            }
         })
             .then(() => props.onTodoDeletion())
     }
 
     const toggle = () => {
+        const token = localStorage.getItem("token")
         const newStatus = props.todo.state === State.Open ? State.Done : State.Open
 
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify({
                 id: props.todo.id,
@@ -50,10 +57,12 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const editTodo = () => {
+        const token = localStorage.getItem("token")
         fetch(`${process.env.REACT_APP_BASE_URL}/todos/${props.todo.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify({
                 id: props.todo.id,

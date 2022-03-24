@@ -1,4 +1,4 @@
-package de.neuefische;
+package de.neuefische.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,10 +15,4 @@ public class TodoElement {
     private String title = "";
     private String text = "";
     private TodoState state = TodoState.Open;
-
-    public TodoElement(String title){
-        this.title = title;
-    }
-
-
-}
+    private String userId;}
